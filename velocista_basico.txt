@@ -1,0 +1,121 @@
+int in1=5;
+int in2=9;
+int in3=6;
+int in4=10;
+
+int sensor[8];
+int rango = 350;
+
+#define S0 sensor[0]
+#define S1 sensor[1]
+#define S2 sensor[2]
+#define S3 sensor[3]
+#define S4 sensor[4]
+#define S5 sensor[5]
+#define S6 sensor[6]
+#define S7 sensor[7]
+
+void setup() {  
+  pinMode(in1,OUTPUT);
+  pinMode(in2,OUTPUT);
+  pinMode(in3,OUTPUT);
+  pinMode(in4,OUTPUT);
+Serial.begin(9600);
+}
+
+void lectura()  {
+   for(int i=0;i<=7;i++){
+    sensor[i] = analogRead(7-i);
+    //delay(150);
+   
+   if(sensor[i] < rango){
+      sensor[i] = 1;    // blanco
+      }
+   else {
+      sensor[i] = 0;    // negro
+      } 
+   } 
+}
+
+void loop() {
+
+  while(true)  {
+    lectura();
+
+    if(S0==1 && S1==1 && S2==1 && S3==1 && S4==1 && S5==1 && S6==1 && S7==0)
+    { derecha(); }
+    if(S0==1&&S1==1&&S2==1&&S3==1&&S4==1&&S5==1&& S6==0 && S7==0)
+    { derecha(); }
+    if(S0==1&&S1==1&&S2==1&&S3==1&&S4==1&&S5==1&& S6==0 &&S7==1)
+    { derecha(); }
+    if(S0==1&&S1==1&&S2==1&&S3==1&&S4==1&& S5==0 && S6==0 &&S7==1)
+    { derecha(); }
+    if(S0==1&&S1==1&&S2==1&&S3==1&&S4==1&& S5==0 &&S6==1&&S7==1)
+    { derecha(); }
+    if(S0==1&&S1==1&&S2==1&&S3==1&& S4==0 && S5==0 &&S6==1&&S7==1)
+    { derecha(); }
+    if(S0==1&&S1==1&&S2==1&&S3==1&&S4==0&&S5==1&&S6==1&&S7==1)
+    { avanza(); }
+    if(S0==1&&S1==1&&S2==1&&S3==0&&S4==0&&S5==1&&S6==1&&S7==1)
+    { avanza(); }
+    if(S0==1&&S1==1&&S2==1&&S3==0&&S4==1&&S5==1&&S6==1&&S7==1)
+    { avanza(); }
+    if(S0==1&&S1==1&&S2==0&&S3==0&&S4==1&&S5==1&&S6==1&&S7==1)
+    { izquierda(); }
+    if(S0==1&&S1==1&&S2==0&&S3==1&&S4==1&&S5==1&&S6==1&&S7==1)
+    { izquierda(); }
+    if(S0==1&&S1==0&&S2==0&&S3==1&&S4==1&&S5==1&&S6==1&&S7==1)
+    { izquierda(); }
+    if(S0==1&&S1==0&&S2==1&&S3==1&&S4==1&&S5==1&&S6==1&&S7==1)
+    { izquierda(); }
+    if(S0==0&&S1==0&&S2==1&&S3==1&&S4==1&&S5==1&&S6==1&&S7==1)
+    { izquierda(); }
+    if(S0==0&&S1==1&&S2==1&&S3==1&&S4==1&&S5==1&&S6==1&&S7==1)
+    { izquierda(); }
+
+  Serial.print("S0: ");
+  Serial.print(S0);
+  Serial.print(" | S1: ");
+  Serial.print(S1);
+  Serial.print(" | S2: ");
+  Serial.print(S2);
+  Serial.print(" | S3: ");
+  Serial.print(S3);
+  Serial.print(" | S4: ");
+  Serial.print(S4);
+  Serial.print(" | S5: ");
+  Serial.print(S5);
+  Serial.print(" | S6: ");
+  Serial.print(S6);
+  Serial.print(" | S7: ");
+  Serial.println(S7);
+  }
+}
+
+void avanza(){  
+  analogWrite(in1,0);
+  analogWrite(in2,60);
+  analogWrite(in3,0);
+  analogWrite(in4,60);
+}
+
+void derecha(){  
+  analogWrite(in1,0);
+  analogWrite(in2,30);
+  analogWrite(in3,0);
+  analogWrite(in4,10);
+}
+
+void izquierda(){  
+  analogWrite(in1,0);
+  analogWrite(in2,10);
+  analogWrite(in3,0);
+  analogWrite(in4,30);
+}
+
+void parar(){  
+  analogWrite(in1,0);
+  analogWrite(in2,0);
+  analogWrite(in3,0);
+  analogWrite(in4,0);
+}
